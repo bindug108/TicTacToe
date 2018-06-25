@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@ namespace TicTacToe.Models
     {
         public Guid Id { get; set; }
 
+        [Display(Name = "Email To")]
         public string EmailTo { get; set; }
 
         public string InvitedBy { get; set; }

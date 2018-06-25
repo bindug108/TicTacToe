@@ -1,4 +1,6 @@
-﻿//import { clearInterval } from "timers";
+﻿//import { setInterval } from "timers";
+
+//import { clearInterval } from "timers";
 var interval;
 
 //function CheckEmailConfirmationStatus(email) {
@@ -13,8 +15,21 @@ var interval;
 //        });
 //}
 
+//function EmailConfirmation(email) {
+//    interval = setInterval(() => {
+//        CheckEmailConfirmationStatus(email);
+//    }, 5000);
+//}
+
 function EmailConfirmation(email) {
-    interval = setInterval(() => {
-        CheckEmailConfirmationStatus(email);
-    }, 5000);
+    if (window.WebSocket) {
+        alert("Websockets are enabled");
+        openSocket(email, "Email");
+    }
+    else {
+        alert("Websockets are not enabled");
+        interval = setInterval(() => {
+            CheckEmailConfirmationStatus(email);
+        }, 5000);
+    }
 }

@@ -71,6 +71,7 @@ namespace TicTacToe
             options.AddRewrite("/NewUser", "/UserRegistration/Index", false);
             app.UseRewriter();
 
+            app.UseWebSockets();
             app.UseCommunicationMiddleware();
             //app.UseDirectoryBrowser();
             app.UseMvc(routes =>
