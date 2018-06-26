@@ -11,6 +11,7 @@ using TicTacToe.Extensions;
 using Microsoft.AspNetCore.Routing;
 using TicTacToe.Models;
 using Microsoft.AspNetCore.Rewrite;
+using System.Globalization;
 
 namespace TicTacToe
 {
@@ -20,6 +21,8 @@ namespace TicTacToe
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSession(o => o.IdleTimeout = TimeSpan.FromMinutes(30));
+            services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddMvc();
             //services.AddDirectoryBrowser();
             services.AddSingleton<IUserService, UserService>();
@@ -43,6 +46,7 @@ namespace TicTacToe
             //});
 
             app.UseStaticFiles();
+            app.UseSession();
 
             var routeBuilder = new RouteBuilder(app);
             routeBuilder.MapGet("CreateUser", context =>
@@ -73,9 +77,24 @@ namespace TicTacToe
 
             app.UseWebSockets();
             app.UseCommunicationMiddleware();
+
+            var supportedCultures = CultureInfo.GetCultures(CultureTypes.AllCultures);
+            var localizationOptions = new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-GB"),
+                SupportedCultures = supportedCultures,
+                SupportedUICultures = supportedCultures
+            };
+
+            localizationOptions.RequestCultureProviders.Clear();
+            localizationOptions.RequestCultureProviders.Add(new CultureProviderResolverService());
+
+            app.UseRequestLocalization(localizationOptions);
+
             //app.UseDirectoryBrowser();
             app.UseMvc(routes =>
             {
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

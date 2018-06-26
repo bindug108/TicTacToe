@@ -44,6 +44,22 @@
                     <li>
                         <a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
                     </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Settings<span class="caret"></span></a>
+                        <ul class="dropdown-menu multi-level">
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Select your language (@ViewBag.Language)<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li class='@(ViewBag.Language == "en-GB" ? "active" : "")'>
+                                        <a asp-controller="Home" asp-action="SetCulture" asp-route-culture="en-GB">English</a>
+                                    </li>
+                                    <li class='@(ViewBag.Language == "fr-FR" ? "active" : "")'>
+                                        <a asp-controller="Home" asp-action="SetCulture" asp-route-culture="fr-FR">French</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
