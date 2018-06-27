@@ -21,24 +21,44 @@ namespace TicTacToe
     public class Startup
     {
         public IConfiguration _configuration { get; }
-        public Startup(IConfiguration configuration)
+        public IHostingEnvironment _hostingEnvironment { get; }
+
+
+        public Startup(IConfiguration configuration, IHostingEnvironment hostingEnvironment)
         {
             _configuration = configuration;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureCommonServices(IServiceCollection services)
         {
-            services.AddSession(o => o.IdleTimeout = TimeSpan.FromMinutes(30));
             services.AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, options => options.ResourcesPath = "Resources");
             //services.AddDirectoryBrowser();
             services.AddSingleton<IUserService, UserService>();
-            services.Configure<EmailServiceOptions>(_configuration.GetSection("Email"));
-            services.AddSingleton<IEmailService, EmailService>();
             services.AddSingleton<IGameInvitationService, GameInvitationService>();
+            services.Configure<EmailServiceOptions>(_configuration.GetSection("Email"));
+            //services.AddSingleton<IEmailService, EmailService>();
+            services.AddEmailService(_hostingEnvironment, _configuration);
             services.AddRouting();
+            services.AddSession(o => o.IdleTimeout = TimeSpan.FromMinutes(30));
+        }
+
+        public void ConfigureDevelopmentServices(IServiceCollection services)
+        {
+            ConfigureCommonServices(services);
+        }
+
+        public void ConfigureStagingServices(IServiceCollection services)
+        {
+            ConfigureCommonServices(services);
+        }
+
+        public void ConfigureProductionServices(IServiceCollection services)
+        {
+            ConfigureCommonServices(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
