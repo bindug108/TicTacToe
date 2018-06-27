@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Rewrite;
 using System.Globalization;
 using Microsoft.Extensions.Configuration;
 using TicTacToe.Options;
+using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace TicTacToe
 {
@@ -31,11 +32,12 @@ namespace TicTacToe
         {
             services.AddSession(o => o.IdleTimeout = TimeSpan.FromMinutes(30));
             services.AddLocalization(options => options.ResourcesPath = "Resources");
-            services.AddMvc();
+            services.AddMvc().AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix, options => options.ResourcesPath = "Resources");
             //services.AddDirectoryBrowser();
             services.AddSingleton<IUserService, UserService>();
             services.Configure<EmailServiceOptions>(_configuration.GetSection("Email"));
             services.AddSingleton<IEmailService, EmailService>();
+            services.AddSingleton<IGameInvitationService, GameInvitationService>();
             services.AddRouting();
         }
 
