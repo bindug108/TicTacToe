@@ -41,10 +41,10 @@ var openSocket = function (parameter, strAction) {
         else if (strAction == "GameInvitation") {
             var data = $.parseJSON(response.data);
             if (data.Result == "OK")
-                window.location.href = "/GameSession/Index/" + data.id;
+                window.location.href = "/GameSession/Index/" + data.Id;
         }
     };
-
+ 
     socket.onopen = function () {
         var json = JSON.stringify({ "Operation": operation, "Parameters": parameter });
         socket.send(json);
