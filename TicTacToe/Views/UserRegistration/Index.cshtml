@@ -4,7 +4,8 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@section Desktop {<h2>@Localizer["DesktopTitle"]</h2>}
+@section Mobile {<h2>@Localizer["MobileTitle"]</h2>}
 <h2>Index</h2>
 
 <h4>UserModel</h4>

@@ -39,9 +39,6 @@
                         <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <li>
-                        <a asp-area="" asp-controller="Leaderboard" asp-action="Index">Leaderboard</a>
-                    </li>
-                    <li>
                         <a asp-area="" asp-controller="Home" asp-action="About">About</a>
                     </li>
                     <li>
@@ -68,8 +65,8 @@
         </div>
     </nav>
     <div class="container body-content">
-        @RenderSection("Desktop", required: false)
-        @if (IsSectionDefined("Mobile")) { IgnoreSection("Mobile"); }
+        @RenderSection("Mobile", required: false)
+        @if (IsSectionDefined("Desktop")) { IgnoreSection("Desktop"); }
         @RenderBody()
         <hr />
         <footer>
