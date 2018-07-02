@@ -23,4 +23,9 @@
     <ProjectReference Include="..\TicTacToe.Logging\TicTacToe.Logging.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Account\Data\" />
+    <Folder Include="Areas\Account\Models\" />
+  </ItemGroup>
+
 </Project>
