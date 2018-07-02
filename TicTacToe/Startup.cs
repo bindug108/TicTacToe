@@ -16,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using TicTacToe.Options;
 using Microsoft.AspNetCore.Mvc.Razor;
 using TicTacToe.Filters;
+using TicTacToe.ViewEngines;
 
 namespace TicTacToe
 {
@@ -45,6 +46,8 @@ namespace TicTacToe
             //services.AddSingleton<IEmailService, EmailService>();
             services.AddEmailService(_hostingEnvironment, _configuration);
             services.AddSingleton<IGameSessionService, GameSessionService>();
+            services.AddTransient<IEmailTemplateRenderService, EmailTemplateRenderService>();
+            services.AddTransient<IEmailViewEngine, EmailViewEngine>();
             services.AddRouting();
             services.AddSession(o => o.IdleTimeout = TimeSpan.FromMinutes(30));
         }
