@@ -1,4 +1,10 @@
-﻿<nav class="navbar navbar-inverse navbar-fixed-top">
+﻿@using Microsoft.AspNetCore.Http;
+@{
+    var email = Context.Session.GetString("email");
+    var displayName = Context.Session.GetString("displayName");
+}
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -38,6 +44,16 @@
                             </ul>
                         </li>
                     </ul>
+                </li>
+                <li>
+                    @if(!string.IsNullOrWhiteSpace(email))
+                    {
+                        Html.RenderPartial("_Account", new TicTacToe.Models.AccountModel
+                        {
+                            Email = email,
+                            DisplayName = displayName
+                        });
+                    }
                 </li>
             </ul>
         </div>
